@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Window Coordinates</title>
+  <style>
+    .buttonContainer {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: yellowgreen;
+      margin-top: 10px;
+    }
+    .selected {
+      background-color: tomato;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="buttonContainer">
+      <button class="btn1">Scroll by 100px(y)</button>
+      <button class="btn2">Scroll to 100px(y)</button>
+      <button class="btn3">Scroll into special</button>
+    </div>
+
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box selected"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+  
+
+  <script>
+    const selected = document.querySelector('.selected');
+
+    selected.addEventListener('click', event => {
+      const rect = selected.getBoundingClientRect();
+      console.log(rect);
+      console.log(`client: ${event.clientX}, ${event.clientY}`);
+      console.log(`page: ${event.pageX}, ${event.pageY}`);
+    });
+
+    const btn1 = document.querySelector('.btn1');
+    const btn2 = document.querySelector('.btn2');
+    const btn3 = document.querySelector('.btn3');
+
+    btn1.addEventListener("click", () =>{
+      window.scrollBy({top:100, left:0, behavior:'smooth'});
+    });
+    btn2.addEventListener("click", () => {
+      // const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      window.scrollTo(0, 100);
+    });
+
+    btn3.addEventListener("click", () => {
+      selected.scrollIntoView();
+    });
+
+  </script>
+</body>
+</html>

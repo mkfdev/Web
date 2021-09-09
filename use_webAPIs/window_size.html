@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Window Size</title>
+</head>
+<body>
+  <div class="tag">
+    <!-- <div>window.screen: <span class="screen"></span></div>
+    <div>window.outer: <span class="outer"></span></div>
+    <div>window.inner: <span class="inner"></span></div>
+    <div>documentElement.clientWidth: <span class="client"></span></div> -->
+  </div>
+  <script>
+    const tag = document.querySelector('.tag');
+
+    function updateTag() {
+      tag.innerHTML = `
+        window.screen: ${window.screen.width}, ${window.screen.height} <br/>
+        window.outer: ${window.outerWidth}, ${window.outerHeight} <br/>
+        window.inner: ${window.innerWidth}, ${window.innerHeight} <br/>
+        documnet.clientWidth: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}
+      `;
+    }
+    
+
+    window.addEventListener('resize', () => {
+      updateTag();
+    });
+
+    updateTag();
+    // const reportWindowSize = () => {
+    //   let screen = document.querySelector('.screen');
+    //   let outer = document.querySelector('.outer');
+    //   let inner = document.querySelector('.inner');
+    //   let client = document.querySelector('.client');
+
+    //   let body = document.querySelector('body');
+
+    //   screen.innerText = `${window.screen.width}, ${window.screen.height}`;
+    //   outer.innerText = `${window.outerWidth}, ${window.outerHeight}`;
+    //   inner.innerText = `${window.innerWidth}, ${window.innerHeight}`;
+    //   client.innerText = `${body.clientWidth}, ${body.clientHeight}`;
+    // };
+
+    // reportWindowSize();
+
+    // window.onresize = reportWindowSize;
+  </script>
+</body>
+</html>

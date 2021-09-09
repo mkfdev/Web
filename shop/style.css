@@ -1,0 +1,89 @@
+body {
+  background-color: #e0f7fa;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.shop {
+  width: 20rem;
+  box-shadow: 7px 7px 18px -4px rgba(0,0,0,0.83);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #efebe9;
+}
+
+.title {
+  margin: 0;
+  padding: .5em 0;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(294deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+}
+
+.shop-list {
+  padding: 0;
+  margin: 0;
+  height: 320px;
+  overflow: auto;
+  list-style: none;
+}
+
+.shop-list li {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5em 1.4em;
+  margin-bottom: .5em;
+}
+
+.shop-list li:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  width: 86%;
+  height: 1px;
+  background-color: #bdb9b7;
+}
+
+.item {
+  font-size: .8rem;
+}
+
+.btn {
+  outline: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.remove {
+  font-size: 1rem;
+}
+
+.add, .remove-all {
+  font-size: 1.5rem;
+  background-color: #000;
+  color: #fff;
+}
+
+.input-item {
+  padding: .3em 1em;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  font-size: 1rem;
+}
+
+.btns {
+  position: relative;
+  text-align: center;
+  padding: .8em 0;
+  background: linear-gradient(294deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+}
