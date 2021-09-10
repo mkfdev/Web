@@ -9,19 +9,21 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
   />
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/carrot.js"></script>
+  <script src="js/carrot.js" defer></script>
   <title>carrot catch game</title>
 </head>
 <body>
   <div class="carrotCatch">
     <div class="carrotCatch-record">
-      <button class="carrotCatch-record__btn play">
-        <i class="fas fa-play">
-          <span class="blind">Play</span>
-        </i>
-      </button>
+      <div class="carrotCatch-record__btn-wrap">
+        <button class="carrotCatch-record__btn">
+          <i class="fas fa-play">
+            <span class="blind">Play</span>
+          </i>
+        </button>
+      </div>
       <div class="carrotCatch-record__time">
-        <span class="timer">00:00</span>
+        <span class="timer">00 : 00</span>
       </div>
       <div class="carrotCatch-record__count">
         <span class="count">0</span>
@@ -29,8 +31,6 @@
     </div>
     <div class="carrotCatch-game">
       <!-- random -->
-      <img src="img/carrot.png" alt="carrot">
-      <img src="img/bug.png" alt="bug">
     </div>
 
     <div class="carrotCatch-popup">
@@ -38,7 +38,7 @@
         <i class="fas fa-reply"></i> 
         <span>Replay</span>
       </button>
-      <p class="message">You Win!</p>
+      <p class="message"></p>
     </div>
   </div>
 </body>
