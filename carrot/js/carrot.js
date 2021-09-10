@@ -16,39 +16,6 @@ const audioBug = new Audio('sound/bug_pull.mp3');
 const audioWin = new Audio('sound/game_win.mp3');
 const audioAlert =  new Audio('sound/alert.wav');
 
-function playAudio() {
-  audioPlay.play();
-}
-
-function stopIntervel(timer) {
-  clearInterval(timer);
-}
-
-function openPopup(text) {
-  playPopupMsg.innerHTML = text;
-  playPopup.classList.add('opened');
-}
-
-function setRandomImg(src, className, len) {
-  // 너비, 높이80 제외(left, top 값 지정시 사이즈가 오버됨)
-  const panelWidth = gamePanel.clientWidth - 80;
-  const panelHeihgt = gamePanel.clientHeight - 80;
-
-  for (i = 0; i < len; i++) {
-    const IMG = document.createElement('img');
-    IMG.src = src;
-    IMG.setAttribute('class', className);
-
-    const randomLeft = Math.floor(Math.random() * panelWidth) +'px';
-    const randomTop = Math.floor(Math.random() * panelHeihgt)  + 'px';
-
-    IMG.style.left = randomLeft;
-    IMG.style.top = randomTop;
-
-    gamePanel.appendChild(IMG);
-  }
-}
-
 function playGame() {
   //플레이 중 시작버튼 숨기기
   gameBtn.classList.add('hide');
@@ -85,6 +52,7 @@ function playGame() {
       // 팝업노출-시간초과로 게임종료
       openPopup('YOU LOST!');
       audioPlay.pause();
+      // 패배 알림 팝업 사운드
       audioAlert.play();
     }
   }, 1000);
@@ -95,6 +63,39 @@ function playGame() {
   //setRandomImg(이미지경로, 클래스명, 갯수) 호출
   setRandomImg(carrotSrc, 'carrot', 10);
   setRandomImg(bugSrc, 'bug', 30);
+}
+
+function playAudio() {
+  audioPlay.play();
+}
+
+function stopIntervel(timer) {
+  clearInterval(timer);
+}
+
+function openPopup(text) {
+  playPopupMsg.innerHTML = text;
+  playPopup.classList.add('opened');
+}
+
+function setRandomImg(src, className, len) {
+  // 너비, 높이80 제외(left, top 값 지정시 사이즈가 오버됨)
+  const panelWidth = gamePanel.clientWidth - 80;
+  const panelHeihgt = gamePanel.clientHeight - 80;
+
+  for (i = 0; i < len; i++) {
+    const IMG = document.createElement('img');
+    IMG.src = src;
+    IMG.setAttribute('class', className);
+
+    const randomLeft = Math.floor(Math.random() * panelWidth) +'px';
+    const randomTop = Math.floor(Math.random() * panelHeihgt)  + 'px';
+
+    IMG.style.left = randomLeft;
+    IMG.style.top = randomTop;
+
+    gamePanel.appendChild(IMG);
+  }
 }
 
 function initGame() {
@@ -155,10 +156,10 @@ gamePanel.addEventListener('click', event => {
     //팝업노출 - 패 게임종료
     openPopup('YOU LOST!');
     audioPlay.pause();
-    //팝업 소리
+    // 패배 알림 팝업 사운드
     setTimeout(() => {
-      audioAlert.play();  
-    }, 300);
+      audioAlert.play();
+    }, 500);
   }
 });
 
