@@ -79,9 +79,10 @@ function openPopup(text) {
 }
 
 function setRandomImg(src, className, len) {
-  // 너비, 높이80 제외(left, top 값 지정시 사이즈가 오버됨)
-  const panelWidth = gamePanel.clientWidth - 80;
-  const panelHeihgt = gamePanel.clientHeight - 80;
+  // 너비 + hover너비, 높이 + hover높이 88px 제외
+  // left, top 값 지정시 사이즈가 오버됨
+  const panelWidth = gamePanel.clientWidth - 88;
+  const panelHeihgt = gamePanel.clientHeight - 88;
 
   for (i = 0; i < len; i++) {
     const IMG = document.createElement('img');
