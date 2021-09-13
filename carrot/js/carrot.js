@@ -4,6 +4,7 @@ let time = 10;
 let gameTimer = null;
 const carrotCatch = document.querySelector('.carrotCatch');
 const gameBtn = document.querySelector('.carrotCatch-record__btn');
+const playBtn = document.querySelector('.fa-play');
 const playTimer = document.querySelector('.timer');
 const gamePanel = document.querySelector('.carrotCatch-game');
 const catchCount = document.querySelector('.count');
@@ -17,9 +18,29 @@ const audioWin = new Audio('sound/game_win.mp3');
 const audioAlert =  new Audio('sound/alert.wav');
 
 function playGame() {
-  //플레이 중 시작버튼 숨기기
-  gameBtn.classList.add('hide');
-  
+  //isPlaying : play check
+  isPlaying = true;
+  gameBtn.style.display = 'inline-block';
+  if(isPlaying) {
+    gameBtn.innerHTML = 
+    `<i class="fas fa-stop">
+      <span class="blind">stop</span>
+    </i>`;
+    const stopBtn = document.querySelector('.fa-stop');
+    stopBtn.addEventListener('click', () => {
+      isPlaying = false;
+      // 타이머 stop
+      stopIntervel(gameTimer);
+      audioPlay.pause();
+      openPopup('RePlay?');
+    });
+  } else {
+    gameBtn.innerHTML =
+    `<i class="fas fa-play">
+      <span class="blind">Play</span>
+    </i>`;
+  }
+
   //당근 카운트 갯수 설정
   count = 10;
   catchCount.innerHTML = count;
@@ -49,11 +70,13 @@ function playGame() {
       // 타이머 stop
       stopIntervel(gameTimer);
       playTimer.innerHTML = `${hour} : ${second}`;
-      // 팝업노출-시간초과로 게임종료
-      openPopup('YOU LOST!');
       audioPlay.pause();
-      // 패배 알림 팝업 사운드
-      audioAlert.play();
+      setTimeout(() => {
+        //팝업노출 - 시간초과 게임종료
+        openPopup('YOU LOST!');
+        // 패배 알림 팝업 사운드
+        audioAlert.play();
+      }, 500);
     }
   }, 1000);
 
@@ -76,6 +99,7 @@ function stopIntervel(timer) {
 function openPopup(text) {
   playPopupMsg.innerHTML = text;
   playPopup.classList.add('opened');
+  gameBtn.style.display = 'none';
 }
 
 function setRandomImg(src, className, len) {
@@ -102,8 +126,6 @@ function setRandomImg(src, className, len) {
 function initGame() {
   // 팝업 숨김
   playPopup.classList.remove('opened');
-  //play 버튼 노출
-  gameBtn.classList.remove('hide');
   //게임 랜덤이미지 리셋
   gamePanel.innerHTML = '';
   //타이머 stop
@@ -115,12 +137,12 @@ function initGame() {
   catchCount.innerHTML = count;
   //배경음악 리셋
   audioPlay.currentTime = 0;
+  playGame();
 }
 
 //gameBtn클릭시
-gameBtn.addEventListener('click', () => {
-  // play check flag
-  isPlaying = true;
+playBtn.addEventListener('click', () => {
+  if(isPlaying) return;
   playGame();
 });
 
@@ -142,10 +164,13 @@ gamePanel.addEventListener('click', event => {
       isPlaying = false;
       //타이머 stop
       stopIntervel(gameTimer);
-      //팝업노출 - 승 게임종료
-      openPopup('YOU WIN!');
       audioPlay.pause();
-      audioWin.play();
+      setTimeout(() => {
+       //팝업노출 - 승 게임종료
+       openPopup('YOU WIN!');
+       // 승리 알림 팝업 사운드
+       audioWin.play();
+      }, 500);
     }
   }
 
@@ -154,11 +179,11 @@ gamePanel.addEventListener('click', event => {
     audioBug.play();
     isPlaying = false;
     stopIntervel(gameTimer);
-    //팝업노출 - 패 게임종료
-    openPopup('YOU LOST!');
     audioPlay.pause();
-    // 패배 알림 팝업 사운드
     setTimeout(() => {
+      //팝업노출 - 패 게임종료
+      openPopup('YOU LOST!');
+      // 패배 알림 팝업 사운드
       audioAlert.play();
     }, 500);
   }

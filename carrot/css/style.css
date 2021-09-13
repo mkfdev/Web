@@ -30,24 +30,27 @@ body {
 }
 .carrotCatch-record__btn {
   display: inline-block;
-  padding: .5em 1.4em;
   outline: 0;
   border: 0;
-  background-color: #fff;
-  cursor: pointer;
-  border: 4px solid #000;
-  border-radius: 10px;
+  padding: 0;
 }
 
 .carrotCatch-record__btn.hide {
   display: none;
 }
 
-.fa-play{
+.fa-play, 
+.fa-stop {
+  padding: 5px 14px;
   font-size: 2rem;
+  background-color: #fff;
+  cursor: pointer;
+  border: 4px solid #000;
+  border-radius: 10px;
 }
 
-.fa-play:hover {
+.fa-play:hover,
+.fa-stop:hover {
   color: red;
 }
 
