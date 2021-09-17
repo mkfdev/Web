@@ -1,3 +1,8 @@
+import Popup from "./popup.js";
+import * as sound from "./sound.js";
+
+const gamePopup = new Popup();
+
 const CARROT_COUNT = 10; //Immutable
 const BUG_COUNT = 10;
 const GAME_TIME = 10;
@@ -6,20 +11,16 @@ const CARROT_SIZE = 80;
 let isPlaying = false;
 let score = 0; // CLICK SCORE
 let timer = undefined;
-const carrotCatch = document.querySelector('.carrotCatch');
 const gameBtn = document.querySelector('.carrotCatch-record__btn');
 const playBtn = document.querySelector('.fa-play');
 const playTimer = document.querySelector('.timer');
 const gameField = document.querySelector('.carrotCatch-game');
 const gameCount = document.querySelector('.count');
-const playPopup = document.querySelector('.carrotCatch-popup');
-const playPopupMsg = document.querySelector('.message');
-const replayBtn = document.querySelector('.carrotCatch-popup_btn');
-const bgSound = new Audio('sound/bg.mp3');
-const carrostSound = new Audio('sound/carrot_pull.mp3');
-const bugSound = new Audio('sound/bug_pull.mp3');
-const winSound = new Audio('sound/game_win.mp3');
-const alertSound =  new Audio('sound/alert.wav');
+
+gamePopup.setClickListener(() => {
+  gamePopup.hide();
+  startGame();
+});
 
 playBtn.addEventListener('click', () => {
   if(isPlaying) {
@@ -35,21 +36,23 @@ gameField.addEventListener('click', event => {
   // 당근이미지 클릭시
   if(event.target.classList.contains('carrot')) {
     event.target.remove();
-    playSound(carrostSound);
+    sound.carrostSoundPlay();
 
     //스코어
     score++;
     gameCount.innerText = CARROT_COUNT - score;
 
     if(score === CARROT_COUNT) {
-      playSound(winSound);
+      sound.winSoundPlay();
+      pauseGame();
       //팝업노출 - 승 게임종료
-      openPopup('WON!!');
+      gamePopup.showWithText('WON!!');
     }
   } else if (event.target.className === 'bug') {
-    playSound(bugSound);
+    sound.bugSoundPlay();
+    pauseGame();
     //팝업노출 - 패 게임종료
-    openPopup('LOSE!');
+    gamePopup.showWithText('LOSE!');
   }
 });
 
@@ -58,12 +61,13 @@ function startGame() {
   initField();
   showGameStopBtn();
   startGameTimer();
-  playSound(bgSound);
+  sound.bgSoundPlay();
 }
 
 function stopGame() {
-  openPopup('RePlay?');
-  playSound(alertSound);
+  pauseGame();
+  gamePopup.showWithText('RePlay?');
+  sound.alertSoundPlay();
 }
 
 function hideGameBtn() {
@@ -83,10 +87,10 @@ function startGameTimer() {
   updateGameTimer(remainingTime);
   timer = setInterval(() => {
     if(remainingTime <= 0) {
-      clearInterval(timer);
+      pauseGame();
       //시간초과팝업
-      openPopup(score === CARROT_COUNT ? 'WON!!' : 'LOSE (TIME OUT)');
-      playSound(alertSound);
+      gamePopup.showWithText(score === CARROT_COUNT ? 'WON!!' : 'LOSE (TIME OUT)');
+      sound.alertSoundPlay();
       return;
     }
     updateGameTimer(--remainingTime);
@@ -99,22 +103,11 @@ function updateGameTimer(time) {
   playTimer.innerText = `${minutes} : ${second}`;
 }
 
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function pauseSound(sound) {
-  sound.pause();
-}
-
-function openPopup(text) {
+function pauseGame() {
   isPlaying = false;
   hideGameBtn();
   clearInterval(timer);
-  pauseSound(bgSound);
-  playPopupMsg.innerHTML = text;
-  playPopup.classList.add('opened'); 
+  sound.bgSoundStop();
 }
 
 function drawFieldItem(src, className, len) {
@@ -152,8 +145,3 @@ function initField() {
   drawFieldItem('img/carrot.png', 'carrot', CARROT_COUNT);
   drawFieldItem('img/bug.png', 'bug', BUG_COUNT);
 }
-
-replayBtn.addEventListener('click', () => {
-  playPopup.classList.remove('opened');
-  startGame();
-})
