@@ -2,33 +2,35 @@
 
 const CARROT_SIZE = 80;
 
-const itemType = Object.freeze({
+export const ItemType = Object.freeze({
   carrot: 'carrot',
   bug: 'bug'
 });
 
-export default class field {
-  constructor(){
-    this.gameField = document.querySelector('.carrotCatch-game');
-    this.gameField.addEventListener('click', this.onClick);
-  }
-
-  onClick = event => {
-    const target = event.target;
-    if(target.classList.contains('carrot')) {
-      target.remove();
-      this.onItemClick && this.onItemClick(itemType.carrot);
-    } else if(target.classList.contains(itemType.bug)) {
-      this.onItemClick && this.onItemClick('bug');
-    }
+export class Field {
+  constructor(carrotCount, bugCount){
+    this.carrotCount = carrotCount;
+    this.bugCount = bugCount;
+    this.field = document.querySelector('.carrotCatch-game');
+    this.field.addEventListener('click', this.onClick);
   }
 
   setClickListener(onItemClick){
     this.onItemClick = onItemClick;
   }
 
+  onClick = event => {
+    const target = event.target;
+    if(target.classList.contains('carrot')) {
+      target.remove();
+      this.onItemClick && this.onItemClick(ItemType.carrot);
+    } else if(target.classList.contains('bug')) {
+      this.onItemClick && this.onItemClick(ItemType.bug);
+    }
+  }
+
   drawFieldItem(src, className, len) {
-    const fieldRect = this.gameField.getBoundingClientRect();
+    const fieldRect = this.field.getBoundingClientRect();
     // 너비 + hover너비, 높이 + hover높이 80px 제외
     const x1 = 0;
     const y1 = 0;
@@ -46,7 +48,7 @@ export default class field {
       item.style.left = `${randomLeft}px`;
       item.style.top = `${randomTop}px`;
   
-      this.gameField.appendChild(item);
+      this.field.appendChild(item);
     }
   }
 
@@ -56,6 +58,8 @@ export default class field {
   }
 
   initField() {
-    this.gameField.innerHTML = '';
+    this.field.innerHTML = '';
+    this.drawFieldItem('img/carrot.png', 'carrot', this.carrotCount);
+    this.drawFieldItem('img/bug.png', 'bug', this.bugCount);
   }
 }
