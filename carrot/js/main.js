@@ -1,13 +1,14 @@
-import { Game, Reason } from "./game.js";
+import { GameBuilder, Reason } from "./game.js";
 import Popup from "./popup.js";
 import * as sound from "./sound.js";
 
-const CARROT_COUNT = 10; //Immutable
-const BUG_COUNT = 10;
-const GAME_TIME = 10;
-
 const gamePopup = new Popup();
-const game = new Game(GAME_TIME, CARROT_COUNT, BUG_COUNT);
+
+const game = new GameBuilder()
+                .setGameDuration(10)
+                .setCarrotCount(10)
+                .setBugCount(10)
+                .build();
 
 gamePopup.setClickListener(() => {
   gamePopup.hide();

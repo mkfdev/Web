@@ -2,6 +2,31 @@
 import { Field, ItemType } from "./field.js";
 import * as sound from "./sound.js";
 
+export class GameBuilder {
+  setGameDuration(duration) {
+    this.gameDuration = duration;
+    return this;
+  }
+
+  setCarrotCount(count) {
+    this.carrotCount = count;
+    return this;
+  }
+
+  setBugCount(count) {
+    this.bugCount = count;
+    return this;
+  }
+
+  build() {
+    return new Game(
+        this.gameDuration,
+        this.carrotCount,
+        this.bugCount
+    )
+  }
+}
+
 export const Reason = Object.freeze(
   {
     lose: 'lose',
@@ -9,7 +34,8 @@ export const Reason = Object.freeze(
     stop: 'stop'
   }
 )
-export class Game{
+
+export class Game {
   constructor(gameTime, carrotCount, bugCount) {
     this.isPlaying = false;
     this.score = 0;
